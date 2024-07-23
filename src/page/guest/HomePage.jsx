@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import background from "../../assets/freepik-export-20240518235644yHzw.png";
+import SearchActivityForm from "../../components/User/SearchActivityForm";
+import DonateUserActivityList from "../../components/Activity/DonateUserActivityList";
 
 const { Header, Content, Footer } = Layout;
 function HomePage() {
@@ -73,39 +75,9 @@ function HomePage() {
           </div>
           <img className=" w-72 h-auto object-cover" src={background} alt="" />
         </div>
-        <div className="mt-16">
-          <Form
-            labelCol={{
-              span: 10,
-            }}
-            wrapperCol={{
-              span: 28,
-            }}
-            layout="horizontal"
-            size="large"
-            className="flex flex-col items-center max-w-[40rem] m-auto bg-slate-200 p-4 rounded-lg text-2xl"
-          >
-            <div className="py-8 text-slate-500 font-bold">
-              Bạn cần đặt lịch vào thời gian nào ?
-            </div>
-            <Form.Item
-              label={
-                <p className="text-xl text-zinc-600 font-bold">
-                  Thời gian diễn ra
-                </p>
-              }
-            >
-              <RangePicker
-                placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
-                format={"DD/MM/YYYY"}
-              />
-            </Form.Item>
-            <div className="pt-4 pb-2">
-              <Button type="primary" className="font-bold">
-                Tìm kiếm
-              </Button>
-            </div>
-          </Form>
+        <div className="mt-16 mx-12">
+          <SearchActivityForm />
+          <DonateUserActivityList />
         </div>
       </Content>
       <Footer className="text-center mt-12 bg-zinc-200 font-bold text-slate-400">

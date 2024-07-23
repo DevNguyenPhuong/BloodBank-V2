@@ -2,7 +2,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Button, Skeleton } from "antd";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useHospital } from "../Hospital/useGetHospital";
 import { useBookingActivity } from "./useBookingActivity";
 import { useDeleteDonateActivity } from "./useDeleteDonateActivity";
@@ -18,13 +18,13 @@ function DonateAcitivitiesItem({
   type,
 }) {
   const { hospital: hospitalData, isLoading } = useHospital(hospitalId);
-  const { userId } = useSelector((store) => store.user);
+  const { userId, isAuthenticated } = useSelector((store) => store.user);
   const { bookActivity, isPending: loadingBooking } = useBookingActivity({
     activityId: id,
   });
   const { startDay, endDay } = useSelector((store) => store.user);
   const { searchActivities, isPending: isSearching } = useSearchActivities();
-
+  const navigate = useNavigate();
   const { deleteDonateActivity, isPending } = useDeleteDonateActivity();
 
   if (isLoading)
@@ -40,8 +40,12 @@ function DonateAcitivitiesItem({
   }
 
   function handleBookingFromUser() {
-    bookActivity({ donorId: userId, activityId: id, status: 0 });
-    searchActivities({ startDay, endDay, status: 0 });
+    if (!isAuthenticated) {
+      navigate("/authenticate");
+    } else {
+      bookActivity({ donorId: userId, activityId: id, status: 0 });
+      searchActivities({ startDay, endDay, status: 0 });
+    }
   }
 
   return (
